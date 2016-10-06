@@ -1,0 +1,487 @@
+// ideas/notes/progress for project
+
+
+    - if invalid data is given we need to stop processing to let the user fix it
+        - this will be an issue with all multiple acceptable answer fields
+        - ValidateString() seems to do this fine
+        - quick fix on the error button toggle was a good example of this
+
+    - need to work on "focus" quite a bit - much of it works well now
+        - with key commands, like what enter does, tab, arrows, etc
+            - these commands can then apply to touch screen if necessary
+
+    - create a <textedit.clear();> function in a textclear button/option
+        - convenience feature not necessary
+        - allow double clicks to highlight the text at which point deleting can be done
+
+    - signal issue with dropdownedit rightkeypress
+        - need to standardize signals/function etc - it's becoming a clusterfuck
+        - some of theis is done
+        -much more is done - mostly fine tuning remains
+
+    - issue with not making a selection from the menus but closing the menu with items[0] "selected"
+        - this causes other issues with saving data, sending signals and focus
+
+    - VK: set the state of alpha characters to the default setting when enter/esc is pressed - done but with issues noted below - I think this is resolved
+
+    - several issue with VK still:
+        - going back from a previous page seems to affect the caps, etc effects
+            - it may have something to do with the timer not expiring - fixed or not the issue
+        - switching fields reverts the output from caps but not on the keyboard - fixed
+        - the issue appears when going forward and then back - can't eliminate the possibility of multiple keyboard instances - this isn't it
+            - this is only occurs for the shift/abc/123 (the change state buttons), but not any other keys - possibly not applicable anymore
+            - it doesn't register these buttons multiple times on the console.log, it does the funtions multiple times - possibly not applicable anymore
+            - I may need to pop/push/replace the keybaord in general but to also fix this - possibly not applicable anymore
+        - disallow navigation, except quit - buttons disabled focus is on the keyboard so arrow buttons should not work, this isn't bullet proof
+        - issue with page back and delete - cursor position is a 1 off, it deletes c_pos - 1 rather than c_pos
+        - loock input when the keyboard is fading in/out - done
+
+    // most of this can be partially remedied by creating the function described below - wait for feedback on this
+    - need to eliminate the console windows from popping up when user clicks FinishButton
+        - one way would be to send the data to another device
+        - another way is to store it in some other way, like delimited text format for later process activated with yet another batch - done
+            - can also send the document to a different device for process
+        - using a batch is a windows item and a quick remedy to starting up a different program and manipulating files
+    - I think "do that" refers to processing delimited data files
+        - finish processing function of text file
+    - will data be processed on the same device?
+        - beginning to implement this - it will work nicely with sending the delimited documents from a website across the internet
+    - the delimited text file shouldn't have any fomatting minus the delimiter
+        - do the formatting as it's being inserted into the final product
+
+    - each question/field could be used similar to a scroll menu-type-thing that is used in more recent games/apps where the previous and next are adjacent (l/r)
+      and a visual miniature of the previous and next fields - non-essential backburner
+        - getting this to work may be within reach
+        - using the arrow keys or swiping will cycle but should stop on fields not filled out - done
+
+    - CheckOutputFile() -> check if file exists - a replica function could be created to increase file options
+
+    - doesn't seem like 1st pages get focus, only the stackview - possibly a good chance to make a splash
+        - possibly add a file with some animation or something
+
+    - vec1.at(i) = vec2.at(i) <- try this for setting directory to file mapping
+        - also consider mapping the files as a string rather than a number to "increase" capacity
+
+    - there appears to be an issue with some of the variables the UI pages, each navigation back/next increases the signals
+        - do the signals need to be cleared out or something?
+        - the memory containers filling the signals are the proper size
+        - maybe the signals are sent out to all receptors and that includes items at the root level if they need representation
+        - this has only occureed with QStrings and not int/bool that I've noticed
+
+    - a possible way to make a menuitem[0] pos item not acceptable is to make it the label and shift up the area by one menu unit
+        - this will make it impossible to click but can still select it with enter/return
+        - to workaround enter/return selects, omit or change the logic to not accept this as a valid response
+
+    - think about restricting any user input during a transition - done
+
+    - load menu items one time not every time
+
+    - integrate into the VKboard an option for on-screen depresses and have the focus immediately go to the larger device after a press
+
+// long-term todo/ideas/goals
+
+
+    - using certain keys for navigation will be difficult between platforms and various keyboards, this needs to be mentioned
+
+    - steps when adding questions:
+        - add to "GetStringResponse"
+        - add to all arrays/vectors at the top of UIProcess.cpp
+        - add to UIProcess constructor
+        - change vaules in processdata.h - #defines/"namespace Question" items
+        - KeyboardInput.qml for page#
+        - "special_field_vec" in <ProcessData>
+
+    - many of the .cpp functions should be altered to be used more widely
+        - they're currently fairly specific to current usage
+        - some of this is done
+        - more of this done
+        - quite a bit more done, more features added
+            - ability to change menu data
+            - internal directory organizing
+
+    - make sure the program can be "flicked"
+        - possibly with <flickableItem.interactive: true>
+
+    - figure out how to use onboard UI keyboard from other devices
+
+    - auto completer: - could be improved but it's pretty good atm
+        - issue:
+        // iterate through the possible strings - this will not work well with huge dictionaries - need to figure out a way to save go to index
+        // a good alternative is to create the lists based on user input, etc, think google
+        // truncate all checked data strings (later -> while accessing them within the vector)
+
+    - text editing - Elided Label Example
+
+    - to allow customizing:
+        - need question/variables(answers)/input into document the field code
+            - write a program to create a script which will then rewrite the main program
+                - this is done for adding menu data, need to write to the other files
+
+    - create a readme file for installation and usage
+        - intital complete
+        - finish when more progress is made
+        - add a "features" section
+
+    // debugging and error handling can kinda go side by side
+    - debugging feature would include categories like "navigation", "focus", "data recognitions", etc
+        - switches would be in both UI and C++ to not have information overload - which is occuring now
+    - need to work on error handling more
+    - come up with a debugging framework with debug categories for console output - use the Novice log system as a guide
+
+    - need to make an install program to change/set directories
+        - likely will need to start with a tiny console program which either unpacks or starts up the larger install program
+        - the larger install program will use a typical UI
+            - this can be used to choose where the output files will go
+            - the main "install" directory is not as important - the initial unpack can place it in a default location
+        - this part of the program should actually be a separate program for the owner where settings/directories can be changed
+        - turn some of the batch executions into options
+            - this will go into an admin/settings/install program
+        - default install is complete!
+
+    - while filling out the form there could be a copy of the form that is filled out as the questions are answered within the same screen/ui
+          to allow review as it is being filled out
+            - this could be an option rather than the norm
+
+
+// completed ideas/notes/progress for project
+
+    - create random transitions(effects) for page pop/push/replace
+        - falling(acceleration), expand from a point, slide too far but come back, spinning to a halt, falling with a compress then decompress(bounce), etc
+        - 16 fairly simple transitions created, will expand upon this as I go
+
+    - beginpage <Keys.onRightPressed: buttonStart.buttonClick()> uses a non-logical signal which can be used throughout the program
+
+    - text input limiting, see "TextInputPage.qml" of <touch> example - backburner
+        - may need to change the type from "TextEdit" to "TextField"
+        - I addressed this already, the appearance may change if TextField is used(it scrolls)
+
+    - need to handle a correct answer then an incorrect answer in UIProcess::processClick() - I think this is fixed
+
+    - streamline buttons - several properties likely unused - done
+        - MouseInput.qml is tiny and not needed but is useful if "tooltip" is used
+
+    - for menus: if no selection is chosen, do not accept the first selection if ENTER is pressed - this isn't important and pretty much unnecessary
+        - maybe remove the selector until a selection is made - this isn't important and pretty much unnecessary
+        - add ESC usage but, do not accept the selection - not sure this is important either
+        - tab and multiple menus is a little funky
+            - tab should select and notify the user somehow
+            - enter should open it
+            - it's current function is pointless in making it faster
+            - this has been improved quite a bit
+
+    - issue with "CompleterEdit" rightkeypress - fixed by sending signal to parent page
+
+    - do something in the batch scripts if files already exist, currently, when the program ends, the only way to retrieve the data is inthe delimited text file
+        - do that also
+        - idk wtf this is but I think it's done
+
+    - allow arrow up/down in edit/menu - arrow navigation in menu done
+        - allow tab/enter? to select and navigate if in menu - this was refined
+
+    - fields should be saved if they have any data in them when going back - some fields are not saved in menus text, possibly fixed
+        - assure navigating back saves any input on the current page before going back
+
+    - when the data_code (i_data_code) is sent from UI, make sure it's checking the right things
+        - adding items is going to be painful
+            - most checks are done through the arrays
+            - the datacodes class is referenced for anything else, it seems
+            - when adding items, all the arrays will need an entry, in most cases
+        - the issue arises from iterating to the max element in the data_sets map
+
+    - CompleterEdit: - done
+        - allow UP/DOWN arrow functionality with the selector - done
+        - allow ENTER to accept a selection - done
+        - this will likely need some focus work - signal
+
+    - work on functions in TDropDown.qml for better functionality - much better with better signal handling - still quite a few redundant/needless references
+        - DDmenu does not accept the first thing on the list as an acceptable response - fixed
+
+    - make sure only spaces is not acceptable - fixed to not accept more than 1 space
+
+    - each time I go back/next on fields with multiple questions with answers completed, - fixed with navigation change
+        it adds 1 to the memory somehwere of what gets processed and it doesn't appear to happen in c++
+
+    - error buton not working with multitude of UIProcess changes - seems to be working better now
+
+    - create an option for VK use: - done
+        - "The virtual keyboard will be the primary text output device if the option is accepted at the beginning of the program."
+
+    - disable keypad on non-text fields include NUM LOCK if necessary - done
+        - nothing outputs when numlock is not active
+        - the number and symbol keys on the number pad have the same key value as on the keybaord, not disabling unless numbers will not be used in a field
+
+    - disable ENTER on the keypad throughout the program, for now - done
+
+    - need to rethink responseID and it's function
+        - it may be good to keep common responses in the main Response::NumResponse enumeration list to access the strings quickly
+        and then have the fieldID access sub-categories where needed
+            - this has been implemented through "Question::DataCodes"
+            - the responseID for generic responses are enumerated as "Question::MaxResponseID"
+            - if a data set is large enough to warrant a separate container "M_DATA_CODE" is used to find the data set
+                - this is mainly done for organizing
+
+    - StartButton can be integrated into NextButton - done
+        - removed start button and put start properties/functions on that page
+
+    - assure the resultant files do not get overwritten - complete
+        - it can be overwritten solution below
+        - in the batch file add:
+            - try to iterate throguh files - this could be done in c++ rather than here
+                - the file name could have a numerical suffix added already to make it easier for me to code
+
+    - install needs: - default install complete
+        - need to get the PATH for WINWORD.EXE and write to the batch file - for windows this is easy (in cmd: "start WINWORD.EXE"), unsure about other platforms
+        - need to unpack batch_files and template_form to the proper directory - done
+            - figure out how to unpack to a specific directory - done
+            - probably include another batch which would place the whole thing in the default directory(C:/MyProgram/) - done
+        - another option is to give directions to do these things ;)~
+
+    - Install steps: issues/to do noted - this is done, didn't feel like documenting all of the stuff I did
+        1) unzip complete - "TheProgram.7z"
+            - need to id directory for next step - done
+            - contains "TheProgram" folder which contains -> two .bat files: "Press Me", "setup"; "MyProgram.7z"
+        2) click "Press Me" to stsrt "setup"
+            - this .bat does everything in one step
+            - creates a main directory - "C:\MyProgram"
+            - creates subdirectories for further unpacking and file moving
+
+    - look into badName signal at text input - it doesn't work properly when no data has been entered - fixed
+        - could be a focus thing - some of it doesn't make sense although a workaround was done
+        - same thing occurs on dropdown page
+
+    - remove the error immediately if valid input is given - done
+
+    - page processes: - I think this is fixed
+        - dropdown page accepts only one piece of data sometimes - simple, stupid oversight on this error
+        - page 3 doubles the count sometime 4 x
+
+    - allow spaces in the names - fixed
+
+    - various signals: consolidate these a bit - went over all signals, made some more logical
+        - commands like quit/next/previous/finish can signal functions to do several things, basically the processing buttons?
+        - where yes/no/maybe buttons will possibly signal a single item process - much of this done
+        - arrowkeys focus after pop() does not work - fixed by not using pop()
+
+    - fix the session logs to only record the name entry one time - done
+        - added conditions for above and for editing
+
+    - handle multiple files for processing - done
+        - handles processing of each file upon completion
+        - deletion of files can be handled separately
+
+    - add a simple header with a simple explanation to the beginning of each type of log file - done
+        - to do this do a quick content search on each append corresponding with a date/time check - done
+            - if the file exists, no header is needed
+            - expand on what's in "Novice"
+        - increment the logs according to month - done
+
+    - upon first run, create a default file directory similar to "Novice" - done
+
+    - organize file stream opening functions - done
+
+    - transfer of data to word docx: - this seems to be done - will need to test with more data fields
+        - data either from .txt file or from memory directly will be written into the .xml template after extracting
+            - the state of the document could be "extracted" - it isn't necessary for the templete to be in word for processing
+            - extracting the template will be useful when altering the questions, format or anything about the final product
+            - see notes above "ProcessData::FileWriteXML()" for potential issue which should be taken care of before release
+        - create a parser - ../Novice/server_unimplemented has <_GetUserName()> as a decent example of how to start
+            - for the most part this is complete - it's pretty simple considering the application
+            - currently, the markers are a floating point number with up to 4 decimal places but this could change to add decimals or other characters
+
+    - delete processing items where previous/left arrow was used - I think this is done
+
+    - left arrow does not work after pressing enter/tab but right arrow does - fixed
+
+    - need to account for short names/responses when inputting data into the xml and batch file - done
+        - use of ifstram and ofstream need to be done
+            - ifstream is for reading
+            - ofstream is for writing
+
+    - the error noticed in test is directly related to the size of the string entered in index location 0.001 - fixed
+        - for some reason that field appends 6-(strlen) characters to EOF
+        - these characters are duplicates of the last n number of characters at EOF
+        - one possibility, if this is the only thing which will happen, is to re-parse the document and delete/accept only 2 lines
+            - if this is the number of lines required
+        - this was related to input/output settings - fixed, hopefully
+
+    - current data (strings and int) should be combined into one map to be processed together - is this not done?
+
+    - maybe instead of popping the pages on previous, just switch/replace? them so the buttons don't get reset - done
+        - button reset on next fixed but "previous" may work better with replace
+        - otherwise, the answers could possibly be read from memory to set the state prior to loading the page (or just after loading?)
+            - this is done for "next" because it loads a new page
+        - due to using replace after pop(), some of the processing items are not necesary with "previous"
+
+    - button logic will need a bit of work particularly somewhere to stop next from going to the next without a choice - done
+        - and also erasing a choice when a second choice is made as mentioned above - done
+
+    - would be nice to have a static "next" button - done
+        - need to get the next button to id the item/page to allow proper navigation - done
+
+    - need to work on text format in the screen and wrapping - workarounds done
+
+    - determine if each entry will require a choice and acceptance (two clicks/two buttons) - make examples of each
+        - this will require a different colors to signify a selection and if a different selection is made to de-select the previous selection - done
+        - click 1 to select and click 2 to write to file the selection and/or "go on" - done
+            - the selection click could write but will need to overwrite if another selection is made before "next" - noted below
+                - with multiple selections, only write each field/button once and have an "previous" option in addition to "next" - done
+
+    - creating a "FileDialog" or similar using Qt functions may not be needed
+        - I can likely use existing funtions/libraries in the console program "Novice" to take care of file naming/saving - done
+        - it'll be important to make the final file specifically formatted in some word processing program - MS word
+
+    - text input issues: - mostly handled but will probably need some tweaking
+        - text input will go outside the bounds of the area - limited max characters to 25
+        - no dummy text to indicate to the user the field and what to do - done
+        - mouse button click signals make editing currently impossible - fixed
+        - work arounds created for tab/return, unsure if touchpad usage works different
+
+    - issue with keyboard focus continuing to be on when clicking anywhere else on the UI even "next" - fixed, see below
+        - it accepts multiple clicks - if there is a way to limit the number of clicks to one or something
+        - workaround created, unsure if on other pages will still accept keyboard input to the text field
+
+    - should remove the "previous" button for now until previous button state can be restored - done, see below
+        - working on above and next state after doing previous
+            - next state is complete for button input
+            - previous causing some issues but, using pop()/push() in a linear fashion makes it a non-issue
+
+    - lock the keyboard on NextButton after name entry; on PreviousButton when going back - fixed
+        - <forceActiveFocus();> seemed to disable focus of the text field
+
+    - limit characters in the name field to alpha-numeric plus a few special characters - done
+        #define SPECIAL_CHARS "`~!@#$%^&*()_+-=[]{}|;:\",./?><"		// escape char included for "
+        #define LOGIN_CHAR "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890"
+        // poss restrictions
+        #define NAME_CHAR "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890`~-\'."
+
+
+
+***     unfiled qml scripts     ***
+
+/* // VKeyboard Functions
+
+    // keyboard signal
+    onSendFieldID: {
+        //console.log(" onSendFieldID  qID " + questionID)
+        keyboard.getFieldID(questionID)
+    }
+
+    // keyboard inclusion
+    // txtLineInput <-- textInputString
+    function saveInput() {
+        textedit.selectAll();
+        textInputString = textedit.selectedText;
+        textedit.deselect();
+        textedit.cursorVisible = false
+        uiProcess.pi_data2 = questionID;
+        uiProcess.ps_data1 = textInputString;
+        uiProcess.checkString();
+        keyboard.defaultSwitch();
+        uiProcess.setCaps(false);
+        console.log("textInputString = " + textInputString);
+    }
+
+    // keyboard function
+    function doTyping(question, key) {
+        if (question === questionID) {
+            var t_len = textedit.text.length
+            var cursor_pos = textedit.cursorPosition
+
+            if (key === "BACKSPACE" || key === "LEFT" || key === "RIGHT") {
+                if (key === "BACKSPACE") {
+                    textedit.remove((cursor_pos - 1), (cursor_pos))
+                    textedit.cursorPosition = cursor_pos - 1
+                }
+                else if (key === "LEFT") {
+                    textedit.cursorPosition = cursor_pos - 1
+                }
+                else if (key === "RIGHT") {
+                    textedit.cursorPosition = cursor_pos + 1
+                }
+            }
+            else if (key === "ENTER") {
+                saveInput()
+                keyboard.visible = false
+                textedit.cursorVisible = false
+                keyboardinput.forceActiveFocus()
+            }
+            else if (key === "SHIFT") {
+                keyboard.alphaShift()
+            }
+            else if (key === "&123") {
+                keyboard.numSwitch()
+            }
+            else if (key === "ABC") {
+                keyboard.defaultSwitch()
+            }
+            else { // cursor manipulation included
+                textedit.cursorVisible = true
+                cursor_pos = textedit.cursorPosition
+                textedit.insert(cursor_pos, key)
+                textedit.cursorPosition = cursor_pos + 1
+            }
+        }
+    }
+*/
+/*    // --- TooloTip --- //
+    // tooltip inclusion inside a button/item area
+    MouseArea{
+        id: buttonMouseArea
+        anchors.fill: parent
+        onClicked: buttonClick()
+        hoverEnabled: true
+        onEntered: parent.border.color = onHoverColor
+        onExited:  parent.border.color = borderColor
+        onPressed: console.log("if mouse button pressed")
+        onPressedChanged: console.log("if mouse button held down/clicked (happens twice on a click)", pressed)
+
+        // for tooltip
+        onPositionChanged: {
+            tooltip.visible = false
+            hoverTimer.start()
+        }
+        onExited: {
+            onExited:  parent.border.color = borderColor
+            tooltip.visible = false
+            hoverTimer.stop()
+        }
+        Timer {
+            id: hoverTimer
+            interval: 1000
+            onTriggered: {
+                tooltip.x = parent.mouseX
+                tooltip.y = parent.mouseY
+                tooltip.visible = true
+            }
+        }
+    }
+    // tooltip Rectangle and timer
+    Rectangle {
+        id: tooltip
+        border.color: "black"
+        color: "beige"
+        width: tooltipText.implicitWidth + 8
+        height: tooltipText.implicitHeight + 8
+        visible: false
+        Text {
+            id: tooltipText
+            anchors.centerIn: parent
+            text: "   " + buttonGrey.text
+        }
+    }
+
+    property int timeoutInterval: 2000
+    Timer {
+        id: mytimer
+        interval: {
+            timeoutInterval;
+            running: false;
+            repeat: false
+        }
+        onTriggered: {
+            console.log("Timer timeout -> toggle()")
+            toggle()
+        }
+    }
+*/
+

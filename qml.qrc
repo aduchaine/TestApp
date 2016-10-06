@@ -1,0 +1,38 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Pages/Transitions.qml</file>
+        <file>Pages/VirtualKeyboard.qml</file>
+        <file>Pages/Buttons/Spacer.qml</file>
+        <file>Pages/Buttons/ReadOnlyText.qml</file>
+        <file>Pages/Buttons/MouseProp1.qml</file>
+        <file>Pages/Buttons/ButtonProp1.qml</file>
+        <file>Pages/Buttons/WriteLineText.qml</file>
+        <file>Pages/Buttons/DropDownMenu.qml</file>
+        <file>Pages/Buttons/DropDownText.qml</file>
+        <file>Pages/Buttons/VKkeys.qml</file>
+        <file>Pages/Buttons/VKtoggle.qml</file>
+        <file>Pages/BeginPage.qml</file>
+        <file>Pages/InputDataStringPage.qml</file>
+        <file>Pages/TesMultInputPage.qml</file>
+        <file>Pages/TestContentPageRow.qml</file>
+        <file>Pages/TestContentPageCol.qml</file>
+        <file>Pages/ContentPage2Buttons.qml</file>
+        <file>Pages/ContentPage4Buttons.qml</file>
+        <file>Pages/EndPage.qml</file>
+        <file>Pages/Buttons/SLText.qml</file>
+        <file>Pages/Buttons/GreyButton.qml</file>
+        <file>Pages/Buttons/NextButton.qml</file>
+        <file>Pages/Buttons/PreviousButton.qml</file>
+        <file>Pages/Buttons/QuitButton.qml</file>
+        <file>Pages/Buttons/ErrorButton.qml</file>
+        <file>Pages/Buttons/DDMenu.qml</file>
+        <file>Pages/Buttons/ACTMenu.qml</file>
+        <file>Resources/my_bckground.png</file>
+        <file>Resources/ad_icon.icns</file>
+        <file>Resources/ad_icon.ico</file>
+        <file>Resources/testwordlist.txt</file>
+        <file>Pages/Buttons/KeyboardProp1.qml</file>
+        <file>Pages/InterpageProcesses.qml</file>
+    </qresource>
+</RCC>
